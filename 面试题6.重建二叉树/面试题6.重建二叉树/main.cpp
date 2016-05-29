@@ -14,7 +14,37 @@ struct BinaryTreeNode{
 };
 
 BinaryTreeNode *ConstructCore(int *startPreorder,int *endPreorder,int *startInorder,int *endInorder){
+    // 前序遍历的第一个结点就是根结点
+    int rootValue = startPreorder[0];
+    BinaryTreeNode *root = new BinaryTreeNode();
+    root->m_value = rootValue;
+    root->m_pLeft = root->m_pRight = NULL;
     
+    if (startPreorder == endPreorder) {
+        if (startInorder == endInorder && *startPreorder == *startInorder) {
+            return root;
+        }else{
+            return NULL;
+        }
+    }
+    
+    // 中序遍历中找到根节点的值
+    int *rootInOrder = startInorder;
+    while (rootInOrder <= endInorder && *rootInOrder != rootValue) {
+        rootInOrder++;
+    }
+    
+    int leftLength = rootInOrder - startInorder;
+    int *leftPreOrderEnd = startPreorder + leftLength;
+    if (leftLength > 0) {
+        // 构建左子树
+        root->m_pLeft = ConstructCore(startPreorder + 1, leftPreOrderEnd, startInorder, rootInOrder - 1);
+    }
+    if (leftLength < endPreorder - startPreorder) {
+        root->m_pRight = ConstructCore(leftPreOrderEnd + 1, endPreorder, rootInOrder + 1, endInorder);
+    }
+    
+    return root;
 }
 
 
