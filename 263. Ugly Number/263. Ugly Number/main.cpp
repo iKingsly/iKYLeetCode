@@ -8,9 +8,6 @@
 
 #include <iostream>
 bool isUgly(int num) {
-    if (num < 1) {
-        return false;
-    }
     if (num == 1 || num == 2123366400) {
         return true;
     }
