@@ -7,9 +7,13 @@
 //
 
 #include <iostream>
+#include <stdlib.h>
 int countPrimes(int n) {
-    int count = 1;
-    int a[1000] = {};
+    int count = 0;
+    int *a = (int *)malloc(sizeof(int) * (n+1));
+    for (int i = 2; i <= n ; i++ ) {
+        a[i] = 0;
+    }
     a[0] = 1;
     a[1] = 1;
     for (int i = 2; i <= n; i++) {
@@ -17,7 +21,7 @@ int countPrimes(int n) {
             for (int j = 2*i; j <= n; j+=i) {
                 a[j] = 1;
             }
-            count ++;
+            count++;
         }
     }
     return count;
