@@ -17,22 +17,23 @@ public:
         if (m + n != s3.size()) {
             return false;
         }
-        vector<vector<bool>> path(m+1,vector<bool>(n+1, false));
+        vector<bool> path(n+1, false);
         for (int i = 0; i < m + 1; i ++) {
             for (int j = 0; j < n + 1; j ++) {
                 if (i == 0 && j == 0) {
-                    path[i][j] = true;
+                    path[j] = true;
                 } else if (i == 0){
-                    path[i][j] = path[i][j-1] & (s2[j-1]==s3[j-1]);
+                    path[j] = path[j-1] & (s2[j-1]==s3[j-1]);
                 } else if (j == 0){
-                    path[i][j] = path[i-1][j] & (s1[i-1] == s3[i-1]);
+                    path[j] = path[j] & (s1[i-1] == s3[i-1]);
                 } else {
-                    path[i][j] = (path[i][j-1] & (s2[j-1]==s3[i+j-1])) || (path[i-1][j] & (s1[i-1]==s3[i+j-1]));
+                    path[j] = (path[j-1] & (s2[j-1]==s3[i+j-1])) || (path[j] & (s1[i-1]==s3[i+j-1]));
                 }
                 
             }
         }
-        return path[m][n];
+        return path[n];
+        
     }
 };
 int main(int argc, const char * argv[]) {
