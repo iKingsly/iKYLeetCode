@@ -37,6 +37,12 @@ int Malloc_SLL (StaticLinkList space) {
     return i;
 }
 
+// 释放的时候将k作为0下标备用链表中的下一个元素
+void Free_SSl(StaticLinkList space, int k) {
+    space[k].cur = space[0].cur;
+    space[0].cur = k;
+}
+
 Status ListInsert (StaticLinkList L, int i, ElemType e) {
     if (i < 1) {
         return ERROR;
@@ -57,6 +63,33 @@ Status ListInsert (StaticLinkList L, int i, ElemType e) {
     return ERROR;
 }
 
+int ListLength (StaticLinkList L) {
+    int j = 0;
+    int i = L[MAXSIZE - 1].cur;
+    while (i) {
+        i = L[i].cur;
+        j++;
+    }
+    return j;
+}
+
+
+Status ListDelete (StaticLinkList L, int i) {
+    int j, k;
+    if (i < 1 || i > ListLength(L)) {
+        return ERROR;
+    }
+    
+    k = MAXSIZE - 1;
+    for (j = 1; j <= i - 1; j++) {
+        k = L[k].cur;
+    }
+    
+    j = L[k].cur;
+    L[k].cur = L[j].cur;
+    Free_SSl(L, j);
+    return OK;
+}
 int main(int argc, const char * argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
