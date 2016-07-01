@@ -28,7 +28,7 @@ void PrintProbability (int number) {
     }
     
     for (int k = 2; k <= number; k++) { // 从第二个到最后一个骰子
-        for (int i = 0; i < k ; i++) { 
+        for (int i = 0; i < k ; i++) {
             pProbabilities[1 - flag][i] = 0;
         }
         
