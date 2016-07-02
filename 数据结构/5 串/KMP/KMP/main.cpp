@@ -9,6 +9,26 @@
 #include <iostream>
 #include <string>
 using namespace std;
+
+void get_nextVal (string T, int *nextval) {
+    int i, j;
+    i = 1;
+    j = 0;
+    nextval[1] = 0;
+    while (i < T[0]) {
+        if (j==0 || T[i] == T[j]) {
+            i++;
+            j++;
+            if (T[i] != T[j]) { // 如果当前字符和前缀的字符不同
+                nextval[i] = j; // 当前j为nextval在i位置的值
+            } else {
+                nextval[i] = nextval[j]; // 如果与前缀字符相同，则将前缀字符赋值
+            }
+        } else {
+            j = nextval[j];
+        }
+    }
+}
 // 返回子串T的next数组
 void get_next (string T, int *next) {
     int i, j;
