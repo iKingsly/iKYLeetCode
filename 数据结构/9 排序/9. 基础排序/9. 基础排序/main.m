@@ -143,6 +143,49 @@ void Merge (int SR[], int TR[], int i, int m, int n) {
         }
     }
 }
+
+void MSort (int SR[], int TR1[], int s, int t) {
+    int m;
+    int TR2[MAXSIZE + 1];
+    if (s == t) {
+        TR1[s] = SR[s];
+    } else {
+        m = (s + t) / 2;
+        MSort(SR, TR2, s, m);
+        MSort(SR, TR2, m + 1, t);
+        Merge(TR2, SR, s, m, t);
+    }
+}
+
+void MergeSort (SqList *L) {
+    MSort(L->r, L->r, 1, L->length);
+}
+
+void QSort(SqList *L, int left, int right) {
+    if (left > right) {
+        return;
+    }
+    
+    int i = left;
+    int j = right;
+    int key = L->r[left];
+    
+    while (i < j) {
+        while (i < j && L->r[j] >= key) {
+            j++;
+        }
+        L->r[i] = L->r[j];
+        
+        while (i < j && L->r[i] <= key) {
+            i++;
+        }
+        L->r[j] = L->r[i];
+    }
+    L->r[i] = key;
+    QSort(L, left, i-1);
+    QSort(L, i, right);
+}
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
